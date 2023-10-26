@@ -3,11 +3,14 @@ import useSWR from "swr";
 import useEmployeeStore from "./EmployeeStore";
 import Image from "next/image";
 
+const fetcher = (url) => fetch(url).then((res) => res.json());
+
 const EmployeeList = ({ onEdit, onRemove }) => {
   const { employees } = useEmployeeStore();
 
   const { data: cachedData } = useSWR(
-    "https://dummy.restapiexample.com/api/v1/employees"
+    "https://dummy.restapiexample.com/api/v1/employees",
+    fetcher
   );
 
   return (
