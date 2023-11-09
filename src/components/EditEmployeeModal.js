@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import useEmployeeStore from "./EmployeeStore";
 
 const EditEmployeeModal = ({ employee, onSave, onClose }) => {
+  const updateEmployee = useEmployeeStore((state) => state.updateEmployee);
+
   const [editedEmployee, setEditedEmployee] = useState({ ...employee });
 
   const handleInputChange = (e) => {
@@ -10,9 +12,19 @@ const EditEmployeeModal = ({ employee, onSave, onClose }) => {
   };
 
   const handleSaveClick = () => {
-    onSave(editedEmployee);
+    if (parseFloat(editedEmployee.salary) < 0 || parseInt(editedEmployee.age, 10) < 0) {
+      alert('Salary and age cannot be negative!');
+    } else {
+      updateEmployee(editedEmployee.id, editedEmployee);
+      onSave(editedEmployee);
+      onClose();
+    }
+  };
+
+  const handleCancelClick = () => {
     onClose();
   };
+
 
   return (
     <div className="bg-black w-full h-full flex justify-center items-center fixed top-0 bg-opacity-80">
@@ -26,7 +38,7 @@ const EditEmployeeModal = ({ employee, onSave, onClose }) => {
                 name="name"
                 placeholder="Name"
                 className="w-full border-sky-100 border-2 p-2 rounded outline-none mb-5"
-                value={editedEmployee.name}
+                value={editedEmployee.name || ''}
                 onChange={handleInputChange}
               />
 
@@ -35,7 +47,7 @@ const EditEmployeeModal = ({ employee, onSave, onClose }) => {
                 name="salary"
                 placeholder="Salary"
                 className="w-full border-sky-100 border-2 p-2 rounded outline-none mb-5"
-                value={editedEmployee.salary}
+                value={editedEmployee.salary || 0}
                 onChange={handleInputChange}
               />
 
@@ -44,18 +56,7 @@ const EditEmployeeModal = ({ employee, onSave, onClose }) => {
                 name="age"
                 placeholder="Age"
                 className="w-full border-sky-100 border-2 p-2 rounded outline-none mb-5"
-                value={editedEmployee.age}
-                onChange={handleInputChange}
-              />
-
-              <input
-                type="file"
-                id="img"
-                name="img"
-                accept="image/*"
-                placeholder="Image"
-                className="w-full border-sky-100 border-2 p-2 rounded outline-none mb-5"
-                value={editedEmployee.img}
+                value={editedEmployee.age || 0}
                 onChange={handleInputChange}
               />
 
@@ -69,7 +70,7 @@ const EditEmployeeModal = ({ employee, onSave, onClose }) => {
             </form>
           </div>
 
-          <button onClick={onClose}>Close</button>
+          <button onClick={handleCancelClick}>Close</button>
         </div>
       </div>
     </div>

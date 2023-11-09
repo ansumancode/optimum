@@ -1,16 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "@/components/Header";
 import EmployeeList from "@/components/EmployeeList";
 import EditEmployeeModal from "@/components/EditEmployeeModal";
 import useEmployeeStore from "@/components/EmployeeStore";
 
 const EmployeeListPage = () => {
-  const { employees, setEmployees } = useEmployeeStore();
-  const [isModalOpen, setModalOpen] = React.useState(false);
-  const [selectedEmployee, setSelectedEmployee] = React.useState(null);
+  const { employees, updateEmployee, removeEmployee } = useEmployeeStore();
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
 
   const handleOpenModal = (employee) => {
-    setSelectedEmployee(employee);
+    setSelectedEmployee({ ...employee});
     setModalOpen(true);
   };
 
@@ -19,27 +19,22 @@ const EmployeeListPage = () => {
     setModalOpen(false);
   };
 
+ 
+
   const handleSaveEmployee = (editedEmployee) => {
-    const updatedEmployees = employees.map((employee) => {
-      if (employee.id === editedEmployee.id) {
-        return editedEmployee;
-      } else {
-        return employee;
-      }
-    });
-    setEmployees(updatedEmployees);
-    handleCloseModal();
+    if (editedEmployee) {
+      updateEmployee(selectedEmployee.id, editedEmployee);
+      handleCloseModal();
+    } else {
+      alert('Invalid employee data. Please make sure all fields are filled.');
+    }
   };
 
-  const handleRemoveEmployee = (id) => {
-    const updatedEmployees = employees.filter((employee) => employee.id !== id);
-    setEmployees(updatedEmployees);
-  };
-
+  
   return (
     <>
       <Header />
-      <EmployeeList employees={employees} onEdit={handleOpenModal} onRemove={handleRemoveEmployee} />
+      <EmployeeList employees={employees} onEdit={handleOpenModal} onRemove={removeEmployee} />
       {isModalOpen && (
         <EditEmployeeModal employee={selectedEmployee} onSave={handleSaveEmployee} onClose={handleCloseModal} />
       )}

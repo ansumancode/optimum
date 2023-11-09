@@ -19,7 +19,7 @@ const EmployeeList = ({ onEdit, onRemove }) => {
         <h2 className="text-xl text-center my-5">Employee List</h2>
 
         <ul className="grid grid-cols-4 gap-4">
-          {employees.map((employee, index) => (
+          {employees.map((employee, id) => (
             <li className="border border-gray-200 p-2 rounded" key={employee.id}>
               <div className="w-full">
                 <Image src="/avatar.png" width={500} height={400} />
@@ -30,17 +30,17 @@ const EmployeeList = ({ onEdit, onRemove }) => {
 
               <div className="flex justify-around mt-5">
                 <button
-                  className="bg-green-400 px-5 rounded text-white cursor-pointer"
-                  onClick={() => onEdit(employee)}
-                >
-                  Edit
-                </button>
-                <button
-                  className="bg-red-400 px-5 rounded text-white cursor-pointer"
-                  onClick={() => onRemove(employee.id)} 
-                >
-                  Remove
-                </button>
+            className="bg-green-400 px-5 rounded text-white cursor-pointer"
+            onClick={() => onEdit(employee, id)}
+          >
+            Edit
+          </button>
+          <button
+            className="bg-red-400 px-5 rounded text-white cursor-pointer"
+            onClick={() => onRemove(employee.id)}
+          >
+            Remove
+          </button>
               </div>
             </li>
           ))}

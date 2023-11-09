@@ -3,7 +3,7 @@ import { getFromCache, setInCache } from './apiCache';
 const API_URL = 'https://dummy.restapiexample.com/api/v1/employees';
 
 export async function fetchEmployeeData() {
-  const cacheKey = API_URL; // Use the URL as the cache key
+  const cacheKey = API_URL; 
 
   const cachedData = getFromCache(cacheKey);
 
@@ -16,7 +16,7 @@ export async function fetchEmployeeData() {
     const response = await fetch(API_URL);
     if (response.ok) {
       const data = await response.json();
-      setInCache(cacheKey, data); // Cache the data
+      setInCache(cacheKey, data); 
       console.log('Data fetched from the API and cached:', data);
       return data;
     } else {
