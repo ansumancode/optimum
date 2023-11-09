@@ -18,11 +18,11 @@ const EmployeeList = ({ onEdit, onRemove }) => {
       <div className="max-w-5xl my-20 mx-auto">
         <h2 className="text-xl text-center my-5">Employee List</h2>
 
-        <ul className="grid grid-cols-4 gap-4">
+        <ul className="grid md:grid-cols-4 gap-4 grid-cols-1">
           {employees.map((employee, id) => (
             <li className="border border-gray-200 p-2 rounded" key={employee.id}>
               <div className="w-full">
-                <Image src="/avatar.png" width={500} height={400} />
+                <Image src="/avatar.png" width={500} height={400} className="w-full" alt="Avatar" />
               </div>
               <p className="text-center">{employee.name}</p>
               <p className="text-center">Salary: {employee.salary}</p>
@@ -49,7 +49,7 @@ const EmployeeList = ({ onEdit, onRemove }) => {
             cachedData.data.map((employee, index) => (
               <li className="border border-gray-200 p-2 rounded" key={index}>
                 <div className="w-full">
-                  <Image src="/avatar.png" width={500} height={400} />
+                  <Image src="/avatar.png" width={500} height={400} className="w-full" alt="Avatar" />
                 </div>
                 <p className="text-center">{employee.employee_name}</p>
                 <p className="text-center">
